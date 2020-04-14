@@ -1,0 +1,63 @@
+plugins {
+    id 'scala'
+}
+
+group 'SparkApplications'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://h2o-release.s3.amazonaws.com/h2o/rel-yule/2/maven/repo/"
+    }
+    maven { url "$url_jcenter2" }
+}
+
+dependencies {
+    compileOnly "org.scala-lang:scala-library:$scala_major.$scala_minor"
+    compileOnly "org.scala-lang:scala-reflect:$scala_major.$scala_minor"
+    compileOnly "org.apache.spark:spark-sql_$scala_major:$spark_version"
+    compileOnly "org.apache.spark:spark-core_$scala_major:$spark_version"
+    compileOnly "org.apache.spark:spark-hive_$scala_major:$spark_version"
+
+    //compile "com.orange:rules-engine_$scala_major:1.1.0"
+    compile "joda-time:joda-time:$joda_version"
+    compile "org.joda:joda-convert:1.8"
+    compile "com.typesafe:config:$typesafe_version"
+    compile "com.github.scopt:scopt_$scala_major:$scopt_version"
+    compile "com.databricks:spark-csv_$scala_major:1.5.0"
+    compile "org.scala-lang:scala-compiler:$scala_major.$scala_minor"
+    compile "ai.h2o:h2o-genmodel:$h2oProjectVersion"
+    compile "ai.h2o:h2o-genmodel-ext-xgboost:$h2oProjectVersion"
+
+    compileOnly 'com.esotericsoftware.kryo:kryo:2.21'
+
+    testCompile "com.holdenkarau:spark-testing-base_$scala_major:$holden_version"
+    testCompile "org.scalatest:scalatest_$scala_major:$scalatest_version"
+    testCompile "org.apache.spark:spark-hive_$scala_major:$spark_version"
+    testCompile "com.holdenkarau:spark-testing-base_$scala_major:$holden_version"
+    testCompile "org.apache.spark:spark-sql_$scala_major:$spark_version"
+    testCompile "org.apache.spark:spark-core_$scala_major:$spark_version"
+    testCompile "org.apache.hadoop:hadoop-client:$hadoop_version"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jar {
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+task testScalaUnit(dependsOn: ['testClasses'], type: JavaExec) {
+    main = 'org.scalatest.tools.Runner'
+    args = ['-R', 'build/classes/test', '-o', '-n', 'UTest']
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+compileScala {
+    options.forkOptions.jvmArgs += "-Xss16m"
+}
+
+test.dependsOn testScalaUnit
