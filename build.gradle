@@ -31,6 +31,10 @@ dependencies {
     compile "org.scala-lang:scala-compiler:$scala_major.$scala_minor"
     compile "ai.h2o:h2o-genmodel:$h2oProjectVersion"
     compile "ai.h2o:h2o-genmodel-ext-xgboost:$h2oProjectVersion"
+    compile group: 'org.twitter4j', name: 'twitter4j-core', version: '4.0.7'
+    compile group: 'org.twitter4j', name: 'twitter4j-stream', version: '2.1.8'
+    compile group: 'org.apache.spark', name: 'spark-streaming_2.11', version: '2.4.5'
+    compile group: 'org.apache.spark', name: 'spark-streaming-twitter_2.11', version: '1.6.2'
 
     compileOnly 'com.esotericsoftware.kryo:kryo:2.21'
 

@@ -16,4 +16,5 @@
 /ammonite.sbt
 /.project
 /lib
+/src/main/resources/twitter.txt
 *~
