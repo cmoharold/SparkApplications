@@ -22,7 +22,6 @@ dependencies {
     compileOnly "org.apache.spark:spark-core_$scala_major:$spark_version"
     compileOnly "org.apache.spark:spark-hive_$scala_major:$spark_version"
 
-    //compile "com.orange:rules-engine_$scala_major:1.1.0"
     compile "joda-time:joda-time:$joda_version"
     compile "org.joda:joda-convert:1.8"
     compile "com.typesafe:config:$typesafe_version"
@@ -35,6 +34,9 @@ dependencies {
     compile group: 'org.twitter4j', name: 'twitter4j-stream', version: '2.1.8'
     compile group: 'org.apache.spark', name: 'spark-streaming_2.11', version: '2.4.5'
     compile group: 'org.apache.spark', name: 'spark-streaming-twitter_2.11', version: '1.6.2'
+    compile group: 'org.apache.spark', name: 'spark-streaming-kafka_2.11', version: '1.6.3'
+
+
 
     compileOnly 'com.esotericsoftware.kryo:kryo:2.21'
 
